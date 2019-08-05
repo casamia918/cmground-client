@@ -1,19 +1,24 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { Provider, observer, inject } from 'mobx-react';
+
+import { isConstructor } from 'lib/helper.js'
+
+
+
+import { YoutubeCommentPickerComponent, PageTitleRenderer as YoutubeCommentPickerPageTitleRenderer, YoutubeCommentPickerStore } from './youtube-comment-picker';
 
 import style from './style.module.scss';
 
-console.log(style);
-
 function HomeComponent() {
-  return <div>Welcome to CMGround.</div>;
+  return <div>Welcome to casamia's playground.</div>;
 }
 
 function AboutComponent() {
   return (
     <>
       <div className={style.section}>
-        <div>
+        <div className={style.sectionTitle}>
           Site info
         </div>
         <ul>
@@ -23,57 +28,37 @@ function AboutComponent() {
 
       </div>
       <div className={style.section}>
-        <div>
+        <div className={style.sectionTitle}>
           Site History
         </div>
         <ul>
-          <li>2019. 8. 6. Created (commit id: )</li>
+          <li>2019. 8. 6. Created </li>
         </ul>
       </div>
-
-
     </>
   );
 }
 
-function Topic({ match }) {
-  return <div>Requested Param: {match.params.id}</div>;
-}
 
-function TopicsComponent({ match }) {
-  return (
-    <div>
-      <div>Topics</div>
-      <ul>
-        <li>
-          <Link to={`${match.url}/components`}>Components</Link>
-        </li>
-        <li>
-          <Link to={`${match.url}/props-v-state`}>Props v. State</Link>
-        </li>
-      </ul>
-
-      <Route path={`${match.path}/:id`} component={Topic} />
-      <Route
-        exact
-        path={match.path}
-        render={() => <h3>Please select a topic.</h3>}
-      />
-    </div>
-  );
-}
-
-function pageContainer(title, page) {
+function pageContainer(titleRenderOrString, page, Store) {
+  let store = null;
+  if (isConstructor(Store)) {
+    console.log("store is consructor", Store);
+    store = new Store();
+  }
+  const title = typeof titleRenderOrString === 'function' ? titleRenderOrString() : titleRenderOrString;
   return function (props) {
     return (
-      <div>
-        <h1 className={style.pageTitle}>
-          {title}
-        </h1>
+      <Provider store={store}>
         <div className={style.pageContainer}>
-          {page(props)}
+          <h1 className={style.pageTitle}>
+            {title}
+          </h1>
+          <div className={style.pageContent}>
+            {page(props)}
+          </div>
         </div>
-      </div>
+      </Provider>
 
     )
   }
@@ -81,7 +66,7 @@ function pageContainer(title, page) {
 }
 
 const Home = pageContainer('Home', HomeComponent);
-const Topics = pageContainer('Topics', TopicsComponent);
 const About = pageContainer('About', AboutComponent);
+const YoutubeCommentPicker = pageContainer(YoutubeCommentPickerPageTitleRenderer, YoutubeCommentPickerComponent, YoutubeCommentPickerStore);
 
-export { Home, Topics, About };
+export { Home, About, YoutubeCommentPicker };

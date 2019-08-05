@@ -2,16 +2,18 @@ import React from "react";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 import Header from './Header';
-import { Home, About, Topics } from './pages'
+import { Home, About, YoutubeCommentPicker } from './pages'
+
+import './App.css'
 
 function App() {
   return (
     <Router>
-      <div>
+      <div className="App">
         <Header />
         <Route exact path="/" component={Home} />
         <Route path="/about" component={About} />
-        <Route path="/topics" component={Topics} />
+        <Route path="/youtube-comment-picker" component={YoutubeCommentPicker} />
       </div>
     </Router>
   );

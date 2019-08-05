@@ -1,14 +1,33 @@
-.pageTitle {
-  padding: 10px;
-  margin: 0;
-}
-
 .pageContainer {
-  padding: 10px;
+
+  max-width: 800px;
+
+  &>* {
+    padding: 15px 15px 0px 15px;
+  }
+
+  .pageTitle {
+    margin: 0;
+  }
+
+  .pageContent {}
 }
 
-.about {
-  .historyContainer {
-    padding: 5px;
+
+
+
+
+
+.section {
+  .sectionTitle {
+    font-size: 15px;
+    font-weight: 500;
   }
+
+  ul {
+    list-style: none;
+    padding-left: 20px;
+  }
+
+  padding-left: 20px;
 }
