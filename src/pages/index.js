@@ -1,27 +1,49 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
-import style from './style.scss';
+import style from './style.module.scss';
 
 console.log(style);
 
 function HomeComponent() {
-  return <h2>Welcome to CMGround.</h2>;
+  return <div>Welcome to CMGround.</div>;
 }
 
 function AboutComponent() {
-  return <h2>About</h2>;
+  return (
+    <>
+      <div className={style.section}>
+        <div>
+          Site info
+        </div>
+        <ul>
+          <li> Owner :  <a href="mailto:casamia743@gmail.com">casamia743@gmail.com</a> </li>
+          <li> Repository : <a href="https://github.com/casamia918/cmground">https://github.com/casamia918/cmground</a></li>
+        </ul>
+
+      </div>
+      <div className={style.section}>
+        <div>
+          Site History
+        </div>
+        <ul>
+          <li>2019. 8. 6. Created (commit id: )</li>
+        </ul>
+      </div>
+
+
+    </>
+  );
 }
 
 function Topic({ match }) {
-  return <h3>Requested Param: {match.params.id}</h3>;
+  return <div>Requested Param: {match.params.id}</div>;
 }
 
 function TopicsComponent({ match }) {
   return (
     <div>
-      <h2>Topics</h2>
-
+      <div>Topics</div>
       <ul>
         <li>
           <Link to={`${match.url}/components`}>Components</Link>
@@ -41,19 +63,25 @@ function TopicsComponent({ match }) {
   );
 }
 
-function pageContainer(page) {
+function pageContainer(title, page) {
   return function (props) {
     return (
-      <div className={style.pageContainer}>
-        {page(props)}
+      <div>
+        <h1 className={style.pageTitle}>
+          {title}
+        </h1>
+        <div className={style.pageContainer}>
+          {page(props)}
+        </div>
       </div>
+
     )
   }
 
 }
 
-const Home = pageContainer(HomeComponent);
-const Topics = pageContainer(TopicsComponent);
-const About = pageContainer(AboutComponent);
+const Home = pageContainer('Home', HomeComponent);
+const Topics = pageContainer('Topics', TopicsComponent);
+const About = pageContainer('About', AboutComponent);
 
 export { Home, Topics, About };
