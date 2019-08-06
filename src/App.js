@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 import Header from './Header';
-import { Home, About, YoutubeCommentPicker } from './pages'
+import { Home, About, YoutubeCommentPicker } from './pages/index.jsx'
 
 import './App.css'
 

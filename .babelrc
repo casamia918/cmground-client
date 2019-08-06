@@ -2,5 +2,18 @@
   "presets": [
     "react-app"
   ],
-  "plugins": []
+  "plugins": [
+    [
+      "@babel/plugin-proposal-decorators",
+      {
+        "legacy": true, // legacy: true is required for mobx
+      }
+    ],
+    [
+      "@babel/plugin-proposal-class-properties",
+      {
+        "loose": true
+      }
+    ]
+  ]
 }
